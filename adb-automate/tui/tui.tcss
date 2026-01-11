@@ -1,0 +1,45 @@
+
+Horizontal{
+    overflow: auto;
+}
+Vertical{
+    overflow: auto;
+}
+
+.box {
+    # height: 1fr;
+    # width: 1fr;
+    border: round #aa8fc0ff;
+    background: transparent;
+    border-title-style: bold;
+}
+
+#app-grid{
+    padding-left: 1;
+    padding-right: 1;
+    margin-top: 1;
+}
+
+#sideview {
+    width: 40%;
+}
+#sideview>* {
+    padding: 1;
+    background: transparent;
+
+}
+#mainview{
+    width: 60%;
+}
+#mainview>* {
+    padding: 1;
+    background: transparent;
+
+}
+#output{
+    height: 35%;
+}
+#output>* {
+    padding: 1;
+    background: transparent;
+}

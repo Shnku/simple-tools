@@ -3,6 +3,7 @@ import subprocess
 from subprocess import CompletedProcess
 import tempfile
 from typing import Any
+from requests.models import Response
 import requests
 
 
@@ -24,13 +25,13 @@ def run_fastboot(*args: str) -> str | Any:
 
 
 def github_release_download(url_data) -> str:
-    response = requests.get(url=url_data)
+    response: Response = requests.get(url=url_data)
     response_data = response.json()
-    download_path = os.path.join(
+    download_path: str = os.path.join(
         tempfile.gettempdir(), response_data["assets"][0]["name"]
     )
-    apk_response = requests.get(
-        response_data["assets"][0]["browser_download_url"],
+    apk_response: Response = requests.get(
+        url=response_data["assets"][0]["browser_download_url"],
         headers={"Accept": "application/octet-stream", "User-Agent": "Mozilla/5.0"},
         stream=True,
     )
@@ -40,6 +41,14 @@ def github_release_download(url_data) -> str:
             print("downloading...")
             file.write(chunk)
     return download_path
+
+
+def search_from_list(word, words_list) -> list[Any]:
+    found_list: list[Any] = []
+    for i in words_list.splitlines():
+        if word in i:
+            found_list.append(i)
+    return found_list
 
 
 def main():

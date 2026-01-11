@@ -1,4 +1,4 @@
-MODS = {
+Flashable_MODS: dict[str, dict[str, str]] = {
     "Shizuku": {
         "src": "https://api.github.com/repos/RikkaApps/Shizuku/releases/latest",
         "package": "moe.shizuku.privileged.api",
@@ -13,6 +13,12 @@ MODS = {
     "KernelSU": {
         "src": "https://api.github.com/repos/tiann/KernelSU/releases/latest",
     },
+    "TrickyStore": {
+        "src": "https://api.github.com/repos/qwq233/TrickyStore/releases/latest",
+    },
+}
+
+Apps_MODS: dict[str, dict[str, str]] = {
     "AdAway": {
         "src": "https://api.github.com/repos/AdAway/AdAway/releases/latest",
     },
@@ -22,7 +28,7 @@ MODS = {
 }
 
 
-Shizuku_MODS = {
+Shizuku_MODS: dict[str, dict[str, str]] = {
     "aShellYou": {
         "src": "https://api.github.com/repos/DP-Hridayan/aShellYou/releases/latest",
     },
@@ -31,8 +37,10 @@ Shizuku_MODS = {
     },
 }
 
-Magisk_MODS = {}
+Magisk_MODS: dict[str, dict[str, str]] = {
+    "SafetyNet-Fix": {
+        "src": "https://api.github.com/repos/kdrag0n/safetynet-fix/releases/latest"
+    }
+}
 
 LSPosed_MODS = {}
-
-print(list(MODS.keys()))
