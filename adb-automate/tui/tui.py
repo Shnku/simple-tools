@@ -1,3 +1,6 @@
+from textual import on
+from functionality.adb import ADB_COMMANDS, adb_version, list_devices
+
 from textual.app import App, ComposeResult
 from textual.containers import Container, Horizontal
 from textual.widgets import (
@@ -10,31 +13,36 @@ from textual.widgets import (
     Static,
 )
 
-from adb_functionality import ADB_COMMANDS, adb_version, list_devices
-
 
 class SideView(Container):
     BORDER_TITLE = "functions"
+    selected_item = ""
 
     def compose(self) -> ComposeResult:
-        with ListView():
-            for i in ADB_COMMANDS.keys():
-                yield ListItem(Label(i))
-        return super().compose()
+        with ListView(id="adb-list"):
+            for name, subitem in ADB_COMMANDS.items():
+                yield ListItem(Label(name))
 
     def on_mount(self):
-        self.id = "sideview"
         self.classes = "box"
+
+    @on(ListView.Selected, "#adb-list")
+    def on_list_selected(self, event: ListView.Selected):
+        index: int | None = event.list_view.index
+        if index is None:
+            return
+        self.selected_item = list(ADB_COMMANDS.keys())[index]
 
 
 class MainView(Container):
     BORDER_TITLE = "Choose"
 
     def on_mount(self):
-        self.id = "mainview"
         self.classes = "box"
-        self.content = "hi"
         self.mount(Static(adb_version(), markup=True))
+
+    def custom(self, out):
+        return Static(out)
 
 
 class Output(Container):
@@ -58,13 +66,26 @@ class MainTUI(App):
         yield Header()
         with Container(id="app-grid"):
             with Horizontal():
-                yield SideView()
-                yield MainView()
+                yield SideView(id="sideview")
+                yield MainView(id="mainview")
             yield Output()
         yield Footer()
 
-    def on_mount(self) -> None:
-        self.query(Static).nodes[1].border_title = "functions"
+    @on(ListView.Selected)
+    def on_list_selected(self, event: ListView.Selected):
+        self.selected_item = event.item
+        self.run_worker(self.subitem_selection, exclusive=True)
+
+    async def subitem_selection(self):
+        item = self.query_one(SideView).selected_item
+        self.query_one("#mainview").mount(Static(str(ADB_COMMANDS.get(item))))
+        return item
+
+    async def update_output(self):
+        item = self.query_one(SideView).selected_item
+        out = ADB_COMMANDS[item]()
+        return out
+        # pass
 
 
 if __name__ == "__main__":
