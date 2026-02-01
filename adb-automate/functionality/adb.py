@@ -18,6 +18,10 @@ def adb_version() -> str | Any:
     return run_adb("--version")
 
 
+def get_device_details():
+    return run_adb("shell", "getprop")
+
+
 ADB_COMMANDS: Dict = {
     "Reboot options": {
         "Reboot device": lambda: run_adb("reboot"),

@@ -3,8 +3,11 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.text import Text
 from rich.markdown import Markdown
-from functionality.adb import list_devices
+from functionality.adb import ADB_COMMANDS, list_devices
 from install_drivers import PACKAGES, check_installed, install_package
+from functionality.command_runner import github_release_download, run_adb
+from functionality.mods_list_src import Shizuku_MODS, Flashable_MODS
+from functionality.mods import activate_shizuku
 
 console = Console()
 
@@ -38,6 +41,14 @@ def main():
     """
     Would You like to Proceed The Setup?
     """
+
+    for pkg in ["Shizuku", "Geto", "aShellYou"]:
+        d_path = github_release_download(Flashable_MODS[pkg]["src"])
+        out = run_adb("install", d_path)
+        if out != 0:
+            run_adb("push", d_path, "/sdcard/Downloads")
+
+    activate_shizuku()
 
 
 if __name__ == "__main__":

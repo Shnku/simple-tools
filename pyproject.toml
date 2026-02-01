@@ -1,0 +1,16 @@
+[project]
+name = "simple-tools"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "pillow>=12.1.0",
+    "pyinstaller>=6.18.0",
+    "requests>=2.32.5",
+    "rich>=14.3.1",
+    "ruff>=0.14.14",
+    "textual>=7.4.0",
+    "tk>=0.1.0",
+    "tqdm>=4.67.1",
+]
