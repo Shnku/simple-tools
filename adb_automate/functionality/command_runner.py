@@ -7,12 +7,17 @@ from requests.models import Response
 import requests
 
 
-def run_command(*args: str) -> str | Any:
-    command: list[str] = list[str](args)
-    result: CompletedProcess = subprocess.run(command, capture_output=True, text=True)
+def run_command(*args: str, shell=False) -> str | Any:
+    if shell:
+        command: str | list[str] = " ".join(args)
+        result: CompletedProcess = subprocess.run(command, shell=True, capture_output=True, text=True)
+    else:
+        command: str | list[str] = list(args)
+        result: CompletedProcess = subprocess.run(command, capture_output=True, text=True)
+    
     if result.returncode != 0:
         print("Error executing: " + result.stderr)
-        return result.returncode
+        raise subprocess.CalledProcessError(result.returncode, command, result.stderr)
     return result.stdout.strip()
 
 
