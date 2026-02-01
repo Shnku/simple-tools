@@ -1,5 +1,5 @@
 from typing import Any
-from command_runner import run_adb
+from .command_runner import run_adb
 
 
 # functions related to mods installations...........

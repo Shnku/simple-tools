@@ -1,5 +1,5 @@
 from typing import Any, Dict
-from command_runner import run_fastboot
+from .command_runner import run_fastboot
 
 
 def list_devices() -> str | Any:

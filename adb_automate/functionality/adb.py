@@ -1,8 +1,6 @@
 import os
 from typing import Any, Dict
-from functionality.command_runner import run_adb
-
-# from command_runner import run_adb
+from .command_runner import run_adb
 import rich
 
 
