@@ -1,0 +1,32 @@
+[project]
+name = "printready-idphoto"
+version = "0.1.0"
+description = ""
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "ShAnku", email = "shanku@example.com" }
+]
+dependencies = [
+    "flet>=0.84.0",
+    "numpy>=2.2.6",
+    "pillow>=12.2.0",
+
+]
+
+[dependency-groups]
+dev = [
+    "flet-cli>=0.84.0",
+    "flet-desktop>=0.84.0",
+    "flet-web>=0.84.0",
+]
+
+[tool.flet]
+desktop_flavor = "light"    # Change to "full" to use flet-audio and flet-video
+org = "com.shanku"
+product = "printready-idphoto"
+company = "sbag"
+copyright = "Copyright (C) 2023-2026 by ShAnku"
+
+[tool.flet.app]
+path = "src"
