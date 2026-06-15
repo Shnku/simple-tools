@@ -31,7 +31,7 @@ def create_grid(photos_list, margin=0.5, ppi=300):
                 break
         canvas.paste(pic, (int(pos_x), int(pos_y)))
         pos_x += pic.width
-    canvas.show()
+    # canvas.show()
     return canvas
 
 
